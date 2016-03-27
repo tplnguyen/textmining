@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>VU Staff Stalker</title>
+
+	<meta charset="utf-8">
+	<meta name="google" value="notranslate">
+	<meta name="title" content="Text Mining" />
+	<meta property="og:title" content="VUSS"/>
+	<meta property="og:site_name" content="TM"/>
+	<meta property="og:locale" content="nb_NO"/>
+	<meta property="og:url" content="http://few.vu.nl/~tnn720/TM/"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta property="og:type" content="website"/>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimal-ui">
+	<meta name="format-detection" content="telephone=no"/>
+
+	<link rel="icon" href="icon.png">
+  <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+</head>
+
+<style>
+body {
+  background-image: url('bgsmoke2.jpeg');
+}
+
+<style>
+#searchbox {
+    width: 20px;
+    height: 29px;
+}
+input:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+input:focus:-moz-placeholder {
+    color: transparent;
+}
+input:focus::-moz-placeholder {
+    color: transparent;
+}
+#searchbox input {
+    outline: none;
+    text-align: center;
+}
+#searchbox input[type="text"] {
+    background-color: #F2F2F2;
+    margin: 0px 10px 80px 0px;
+    padding: 14px 0px 14px 0px;
+    border-width: 0px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 20px;
+    color: #045FB4;
+    width: 35%;
+    display: inline-table;
+    vertical-align: top;
+    border-radius: 25px;
+}
+#button-submit {
+    background: url('search.png') no-repeat;
+    border-width: 0px;
+    cursor: pointer;
+    margin-left: 0;
+    margin-top: 5px;
+    width: 50px;
+    height: 50px;
+}
+#button-submit:hover {
+    background: url('search-hover.png') no-repeat;
+}
+#button-submit:active {
+    background: url('search-hover.png') no-repeat;
+    outline: none;
+}
+#button-submit::-moz-focus-inner {
+    border: 0;
+}
+
+html,button,input,.og-gird,a,textarea{font-family: 'BEBAS', sans-serif;}
+
+body
+  @font-face {
+    font-family: 'BEBAS';
+    src: url(BEBAS.eot);
+    src: url(BEBAS.woff) format('woff'),
+         url(BEBAS.eot?#iefix) format('embedded-opentype'),
+         url(BEBAS.ttf) format('truetype'),
+         url(BEBAS.svg) format('svg');
+  }
+
+  h1 {
+  	font-size: 85px;
+  	line-height: 30px;
+    margin: 100px 0px;
+    text-align: center;
+  	font-weight: 100;
+  	color: #848484;
+    opacity: 0.75;
+    font-family: 'BEBAS';
+  }
+
+  h1:hover {
+    color: #045FB4;
+    font-size: 90px;
+  }
+
+  #note {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 100px;
+    color: #045FB4;
+    font-family: 'thegirlnextdoor';
+  }
+
+  #note:hover:after{
+    color: #848484;
+    content: ' We are sorry, this application still needs loads of improvements. Btw, the search bar is lowercase sensitive.';
+  }
+
+  p {
+    text-align: center;
+    font-family: 'Avenir';
+    font-size: 11px;
+  }
+  p
+    @font-face {
+      font-family: 'thegirlnextdoor';
+      src: url(thegirlnextdoor.eot);
+      src: url(thegirlnextdoor.woff) format('woff'),
+           url(thegirlnextdoor.eot?#iefix) format('embedded-opentype'),
+           url(thegirlnextdoor.ttf) format('truetype'),
+           url(thegirlnextdoor.svg) format('svg');
+    }
+
+.update {
+  font-size: 15px;
+  line-height: 15px;
+  margin: 0px;
+  font-weight: 100;
+  color: #848484;
+  font-family: 'Avenir';
+  display: inline;
+}
+</style>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(function() {
+
+    $(".search_button").click(function() {
+        // getting the value that user typed
+        var searchString = $("#search_box").val();
+        // forming the queryString
+        var data = 'search='+ searchString;
+
+        // if searchString is not empty
+        if(searchString) {
+            // ajax call
+            $.ajax({
+                type: "POST",
+                url: "VUSS.php",
+                data: data,
+                beforeSend: function(html) { // this happens before actual call
+                    $("#results").html('');
+                    $("#searchresults").show();
+                    $(".word").html(searchString);
+               },
+               success: function(html){ // this happens after we get results
+                    $("#results").show();
+                    $("#results").append(html);
+              }
+            });
+        }
+        return false;
+    });
+});
+</script>
+</head>
+
+<body>
+  <center>
+    <h1>VU&nbsp;&nbsp; St@ff&nbsp;&nbsp; Stalker</h1>
+    <form id="searchbox" method="post" action="">
+      <input id="search_box" type="text" class="search_box" placeholder="Please enter a name">
+      <input id="button-submit" type="submit" class="search_button" value="">
+    </form>
+    <div style="height:130px;width:700px;border:0px solid #fff;font:20px/26px Arial;overflow:auto;">
+      <div id="searchresults">
+        <span id="results" class="update"></span>
+      </div>
+    </div>
+    <p id="note">Note: </p>
+    <p>– a creation for Text Mining –</p>
+  </center>
+</body>
+</html>
